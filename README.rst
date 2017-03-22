@@ -82,6 +82,11 @@ https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/pySRU_comparison.pdf
 A document including the formulas and algorithms used is: 
 https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/report_thery_m1.pdf
 
+Testing
+-------
+
+- Travis CI status: |Travis Status|
+
 To do
 =====
 - Quicker calculation of intensity spectrum
