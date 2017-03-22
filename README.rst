@@ -95,3 +95,6 @@ To do
 - Implement the pi polarization
 - Extend to helical undulators
 
+
+.. |Travis Status| image:: https://travis-ci.org/srio/und_Sophie_2016.svg?branch=master
+   :target: https://travis-ci.org/srio/und_Sophie_2016
