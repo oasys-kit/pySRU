@@ -15,7 +15,6 @@ def suite():
     Gathers all the tests in a test suite.
     """
     suites = (
-        # tests by Mark Glass.
         # unittest.makeSuite(MagneticFieldTest, 'test'),
         # unittest.makeSuite(MagneticStructureTest, 'test'),
         # unittest.makeSuite(MainTest, 'test'),

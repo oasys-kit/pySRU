@@ -31,7 +31,6 @@ import unittest
 import numpy as np
 import scipy.integrate as integrate
 import scipy.constants as codata
-import matplotlib.pyplot as plt
 from pySRU.MagneticStructureUndulatorPlane import MagneticStructureUndulatorPlane as Undulator
 from pySRU.ElectronBeam import ElectronBeam
 from pySRU.SourceBendingmagnet import BENDING_MAGNET as BM
