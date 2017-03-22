@@ -15,15 +15,15 @@ def suite():
     Gathers all the tests in a test suite.
     """
     suites = (
-        # unittest.makeSuite(MagneticFieldTest, 'test'),
-        # unittest.makeSuite(MagneticStructureTest, 'test'),
-        # unittest.makeSuite(MainTest, 'test'),
-        # unittest.makeSuite(RadiationFactoryTest, 'test'),
-        # unittest.makeSuite(RadiationTest, 'test'),
-        # unittest.makeSuite(UndulatorSimulationTest, 'test'),
+        unittest.makeSuite(MagneticFieldTest, 'test'),
+        unittest.makeSuite(MagneticStructureTest, 'test'),
+        unittest.makeSuite(MainTest, 'test'),
+        unittest.makeSuite(RadiationFactoryTest, 'test'),
+        unittest.makeSuite(RadiationTest, 'test'),
+        unittest.makeSuite(UndulatorSimulationTest, 'test'),
         unittest.makeSuite(UndulatorParameterTest, 'test'),
-        # unittest.makeSuite(TrajectoryFactoryTest, 'test'),
-        # unittest.makeSuite(TrajectoryTest, 'test'),
+        unittest.makeSuite(TrajectoryFactoryTest, 'test'),
+        unittest.makeSuite(TrajectoryTest, 'test'),
 
     )
     return unittest.TestSuite(suites)

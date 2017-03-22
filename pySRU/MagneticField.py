@@ -28,7 +28,6 @@ __license__ = "MIT"
 __date__ = "31/08/2016"
 
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 

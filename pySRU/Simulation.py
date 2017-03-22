@@ -28,9 +28,8 @@ __license__ = "MIT"
 __date__ = "31/08/2016"
 
 import numpy as np
-import matplotlib.pyplot as plt
 from  scipy.constants import physical_constants
-from mpl_toolkits.mplot3d import Axes3D
+#from mpl_toolkits.mplot3d import Axes3D
 import scipy.constants as codata
 import time
 from scipy.interpolate import interp1d

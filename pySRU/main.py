@@ -29,7 +29,6 @@ __date__ = "31/08/2016"
 
 import numpy as np
 import scipy.constants as codata
-import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import scipy.integrate as integrate
 import scipy.interpolate as interpolate
@@ -101,6 +100,8 @@ def erreur_near_ff(und,beam):
     print(rad_max_theo)
     d = np.linspace(20,60, 21)
     error_rad=sim_test_analy.error_radiation_method_distance(method=RADIATION_METHOD_APPROX,D=d)
+
+    import matplotlib.pyplot as plt
     plt.plot(d,error_rad)
     plt.xlabel("distance")
     plt.ylabel("error")
@@ -128,6 +129,9 @@ def erreur_nb_pts_traj(und,beam):
     # print((rad_max-rad_max_theo))
     np_pts= np.arange(300,500,10)
     error_rad=sim_test_analy.error_radiation_nb_pts_traj(good_value=rad_ref,nb_pts=np_pts)
+
+
+    import matplotlib.pyplot as plt
     plt.plot(np_pts,error_rad)
     plt.xlabel("number of point")
     plt.ylabel("error")
