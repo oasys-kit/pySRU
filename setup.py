@@ -48,6 +48,8 @@ from setuptools import setup, Command
 import sys
 import os
 
+
+
 cmdclass = {}
 
 
@@ -103,12 +105,11 @@ setup(name='pySRU',
       author='Sophie Thery, Mark Glass, Manuel Sanchez del Rio',
       author_email='srio@esrf.eu',
       url='https://github.com/SophieTh/und_Sophie_2016/',
-      packages=['pySRU'],
+      packages=['pySRU', 'pySRU.tests'],
       install_requires=[
                         'numpy',
                         'scipy'
                        ],
       cmdclass=cmdclass,
-      test_suite='tests'
      )
 
