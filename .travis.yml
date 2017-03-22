@@ -1,0 +1,59 @@
+language: python
+
+git:
+    depth: 1
+
+matrix:
+    include:
+        - python: 3.4
+          os: linux
+          env:
+              - BUILD_COMMAND=sdist
+
+        #- python: 3.5
+        #  os: linux
+        #  env:
+        #      - BUILD_COMMAND=sdist
+
+        #- language: generic
+        #  os: osx
+        #  env:
+        #      - BUILD_COMMAND=bdist_wheel
+        #      - PYTHON_VERSION=3
+
+
+#before_install:
+#    # On MacOS: install python3 if needed
+#    - source ./ci/before_install-${TRAVIS_OS_NAME}.sh
+
+install:
+    # Upgrade distribution modules
+    - python -m pip install --upgrade pip
+    - pip install --upgrade setuptools
+
+    # Install build dependencies
+    - pip install --upgrade wheel
+
+    # Print Python info
+#    - python ./ci/info_platform.py
+    - pip list
+
+    # Generate source package or wheel
+    - python setup.py $BUILD_COMMAND
+    - ls dist
+
+script:
+    - pip install numpy scipy
+
+    # Install built package
+    # Make sure project does not come from cache or pypi
+    # At this point all install_requires dependencies MUST be installed
+    # as this is installing only from dist
+    - pip install --pre --find-links dist/ --no-cache-dir --no-index pySRU
+
+    # Print Python info
+    #- python ci/info_platform.py
+    - pip list
+
+    # Run the tests
+    - python pySRU/tests/AllTests.py
