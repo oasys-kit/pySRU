@@ -2,14 +2,12 @@
 pySRU
 =====
 
-WARNING: PROJECT UNDER DEVELOPMENT!!
-
 Synchrotron Radiation Undulator emission in python
 
 Main development website: https://github.com/SophieTh/und_Sophie_2016
+Fork with some fixes and continuos integration: https://github.com/srio/und_Sophie_2016
 
 A toolbox to calculate the emission of radiation by undulators in storage rings. 
-
 
 This software library implements formulas to calculate the emission of radiation by undulators in storage rings, and more
 generally, the emission of a relativistic electron in an arbitrary magnetic field.
@@ -24,7 +22,7 @@ This code is relased under the MIT license as detailed in the LICENSE file.
 Installation
 ------------
 
-To build the library for python use, just use the ``python setup.py install`` approach. It is also available in http://pypi.python.org/pypi/pySRU/: ``pip install pySRU``
+To build the library for python use, just use the ``pip install .`` in the pySRU directory. It is also available in http://pypi.python.org/pypi/pySRU/: ``pip install pySRU``
 
 
 Example
