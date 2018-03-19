@@ -4,9 +4,7 @@ pySRU
 
 Synchrotron Radiation Undulator emission in python
 
-Main development website: https://github.com/SophieTh/und_Sophie_2016
-
-Fork with some fixes and continuos integration: https://github.com/srio/und_Sophie_2016
+Main development website: https://github.com/oasys-kit/pySRU
 
 A toolbox to calculate the emission of radiation by undulators in storage rings. 
 
@@ -76,10 +74,10 @@ Documentation
 Code documentation will be added soon. For using pySRU, start with prepared simulations in Sumulation.py
 
 A comparison of the pySRU results with other codes can be found at: 
-https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/pySRU_comparison.pdf
+https://github.com/oasys-kit/pySRU/blob/master/doc/pySRU_comparison.pdf
 
 A document including the formulas and algorithms used is: 
-https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/report_thery_m1.pdf
+https://github.com/oasys-kit/pySRU/blob/master/doc/report_thery_m1.pdf
 
 Testing
 -------
