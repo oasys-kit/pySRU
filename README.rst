@@ -71,7 +71,7 @@ Result link: https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/radiati
 
 Documentation
 -------------
-Code documentation will be added soon. For using pySRU, start with prepared simulations in Sumulation.py
+For using pySRU, start with prepared simulations in Simulation.py
 
 A comparison of the pySRU results with other codes can be found at: 
 https://github.com/oasys-kit/pySRU/blob/master/doc/pySRU_comparison.pdf
