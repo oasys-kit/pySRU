@@ -27,7 +27,7 @@
 # Memorandum: 
 #
 # Install from sources: 
-#     git clone https://github.com/SophieTh/und_Sophie_2016.git pySRU
+#     git clone https://github.com/oasys-kit/pySRU
 #     cd pySRU
 #     python setup.py install
 #
@@ -100,7 +100,7 @@ cmdclass['build_doc'] = BuildDocCommand
 
 
 setup(name='pySRU',
-      version='0.5.3',
+      version='0.5.4',
       description='Python synchrotron undulator calcution',
       author='Sophie Thery, Mark Glass, Manuel Sanchez del Rio',
       author_email='srio@esrf.eu',

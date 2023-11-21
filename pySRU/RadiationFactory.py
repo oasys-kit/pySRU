@@ -175,8 +175,8 @@ class RadiationFactory(object):
             X = np.sqrt(x ** 2 + y ** 2 + distance ** 2)
             n_chap = np.array([x, y, distance]) / X
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
         A1 = (n_chap[0] * trajectory.a_x + n_chap[1] * trajectory.a_y + n_chap[2] * trajectory.a_z)
         A2 = (n_chap[0] * (n_chap[0] - trajectory.v_x) + n_chap[1] * (n_chap[1] - trajectory.v_y)
                 + n_chap[2] * (n_chap[2] - trajectory.v_z))
@@ -208,8 +208,8 @@ class RadiationFactory(object):
             X = np.sqrt(x ** 2 + y ** 2 + distance ** 2)
             n_chap = np.array([x, y, distance]) / X
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
         A1 = (n_chap[1] * trajectory.v_z - n_chap[2] * trajectory.v_y)
         A2 = (-n_chap[0] * trajectory.v_z + n_chap[2] * trajectory.v_x)
         A3 = (n_chap[0] * trajectory.v_y - n_chap[1] * trajectory.v_x)
@@ -227,7 +227,7 @@ class RadiationFactory(object):
             E[k] = np.trapz(integrand[k], trajectory.t)
         E *= self.photon_frequency * 1j
 
-        terme_bord = np.full((3), 0. + 1j * 0., dtype=np.complex)
+        terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
         Alpha_1 = (1.0 / (1.0 - n_chap[0] * trajectory.v_x[-1]
                           - n_chap[1] * trajectory.v_y[-1] - n_chap[2] * trajectory.v_z[-1]))
         Alpha_0 = (1.0 / (1.0 - n_chap[0] * trajectory.v_x[0]
@@ -256,8 +256,8 @@ class RadiationFactory(object):
 
         R= X/codata.c - n_chap[0] * trajectory.x- n_chap[1] * trajectory.y - n_chap[2] * trajectory.z
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
         A1 = (n_chap[0] * trajectory.a_x + n_chap[1] * trajectory.a_y + n_chap[2] * trajectory.a_z)
         A2 = (n_chap[0] * (n_chap[0] - trajectory.v_x) + n_chap[1] * (n_chap[1] - trajectory.v_y)
                 + n_chap[2] * (n_chap[2] - trajectory.v_z))
@@ -293,8 +293,8 @@ class RadiationFactory(object):
 
         R= X/codata.c - n_chap[0] * trajectory.x- n_chap[1] * trajectory.y - n_chap[2] * trajectory.z
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
         A1 = (n_chap[1] * trajectory.v_z - n_chap[2] * trajectory.v_y)
         A2 = (-n_chap[0] * trajectory.v_z + n_chap[2] * trajectory.v_x)
         A3 = (n_chap[0] * trajectory.v_y - n_chap[1] * trajectory.v_x)
@@ -314,7 +314,7 @@ class RadiationFactory(object):
             E[k] = np.trapz(integrand[k], trajectory.t)
             #E[k] = integrate.simps(integrand[k], trajectory.t)
 
-        terme_bord = np.full((3), 0. + 1j * 0., dtype=np.complex)
+        terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
         Alpha_1 = (1.0 / (1.0 - n_chap[0][-1] * trajectory.v_x[-1]
                           - n_chap[1][-1] * trajectory.v_y[-1] - n_chap[2][-1] * trajectory.v_z[-1]))
         Alpha_0 = (1.0 / (1.0 - n_chap[0][0] * trajectory.v_x[0]
@@ -344,8 +344,8 @@ class RadiationFactory(object):
         n_chap[1,:] /= R
         n_chap[2,:] /= R
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
         A1 = (n_chap[0] * trajectory.a_x + n_chap[1] * trajectory.a_y + n_chap[2] * trajectory.a_z)
         A2 = (n_chap[0] * (n_chap[0] - trajectory.v_x) + n_chap[1] * (n_chap[1] - trajectory.v_y)
               + n_chap[2] * (n_chap[2] - trajectory.v_z))
@@ -373,8 +373,8 @@ class RadiationFactory(object):
         n_chap[1,:] /= R
         n_chap[2,:] /= R
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
 
         A1 = (n_chap[1] * trajectory.v_z - n_chap[2] * trajectory.v_y)
         A2 = (-n_chap[0] * trajectory.v_z + n_chap[2] * trajectory.v_x)
@@ -389,7 +389,7 @@ class RadiationFactory(object):
             #E[k] = integrate.simps(integrand[k], trajectory.t)
         E *= self.photon_frequency * 1j
 
-        terme_bord = np.full((3), 0. + 1j * 0., dtype=np.complex)
+        terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
         Alpha_1 = (1.0 / (1.0 - n_chap[0][-1] * trajectory.v_x[-1]
                           - n_chap[1][-1] * trajectory.v_y[-1] - n_chap[2][-1] * trajectory.v_z[-1]))
         Alpha_0 = (1.0 / (1.0 - n_chap[0][0] * trajectory.v_x[0]
@@ -411,8 +411,8 @@ class RadiationFactory(object):
         R = np.sqrt( n_chap[0, :]**2 + n_chap[1, :]**2 + n_chap[2, :]**2 )
         n_chap[:, :] /= R[:]
 
-        E = np.empty((3,), dtype=np.complex)
-        integrand = np.empty((3, N), dtype=np.complex)
+        E = np.empty((3,), dtype=complex)
+        integrand = np.empty((3, N), dtype=complex)
 
         A1 = (n_chap[0] * trajectory.a_x + n_chap[1] * trajectory.a_y + n_chap[2] * trajectory.a_z)
         A2 = (n_chap[0] * (n_chap[0] - trajectory.v_x) + n_chap[1] * (n_chap[1] - trajectory.v_y)
@@ -450,8 +450,8 @@ class RadiationFactory(object):
         n_chap[1, :] /= R
         n_chap[2, :] /= R
 
-        E = np.zeros((3,), dtype=np.complex)
-        integrand = np.zeros((3, N), dtype=np.complex)
+        E = np.zeros((3,), dtype=complex)
+        integrand = np.zeros((3, N), dtype=complex)
 
         A1 = (n_chap[1] * trajectory.v_z - n_chap[2] * trajectory.v_y)
         A2 = (-n_chap[0] * trajectory.v_z + n_chap[2] * trajectory.v_x)
@@ -472,7 +472,7 @@ class RadiationFactory(object):
             E[k] = np.trapz(integrand[k], trajectory.t)
             #E[k] = integrate.simps(integrand[k], trajectory.t)
 
-        terme_bord = np.full((3), 0. + 1j * 0., dtype=np.complex)
+        terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
         Alpha_1 = (1.0 / (1.0 - n_chap[0][-1] * trajectory.v_x[-1]
                          - n_chap[1][-1] * trajectory.v_y[-1] - n_chap[2][-1] * trajectory.v_z[-1]))
         Alpha_0 = (1.0 / (1.0 - n_chap[0][0] * trajectory.v_x[0]
