@@ -100,7 +100,7 @@ cmdclass['build_doc'] = BuildDocCommand
 
 
 setup(name='pySRU',
-      version='0.5.4',
+      version='0.5.5',
       description='Python synchrotron undulator calcution',
       author='Sophie Thery, Mark Glass, Manuel Sanchez del Rio',
       author_email='srio@esrf.eu',

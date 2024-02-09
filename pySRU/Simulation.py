@@ -50,12 +50,13 @@ eV_to_J = codata.e
 
 class Simulation(object):
 
-    def __init__(self, source, trajectory_fact, radiation_fact, trajectory, radiation):
+    def __init__(self, source, trajectory_fact, radiation_fact, trajectory, radiation, electric_field=None):
         self.source=source
         self.trajectory_fact=trajectory_fact
         self.radiation_fact=radiation_fact
         self.trajectory=trajectory
         self.radiation=radiation
+        self.electric_field=electric_field
 
 # faire un autre constructeur pour la copie
 
@@ -624,13 +625,50 @@ def create_simulation(magnetic_structure,electron_beam, magnetic_field=None, pho
     #print('step 3')
     trajectory=traj_fact.create_from_source(source=source)
     #print('step 4')
-    radiation = rad_fact.create_for_one_relativistic_electron(trajectory=trajectory, source=source, XY_are_list=XY_are_list,
-                                                              distance=distance, X=X, Y=Y)
+    # print("input: ", XY_are_list)
+    # print("input: ", X.shape)
+    # print("input: ", Y.shape)
+    if False: # before storing electric field
+        radiation = rad_fact.create_for_one_relativistic_electron(trajectory=trajectory, source=source, XY_are_list=XY_are_list,
+                                                                  distance=distance, X=X, Y=Y)
+
+        print("radiation: ", radiation.intensity.shape)
+        print("radiation: ", radiation.X.shape)
+        print("radiation: ", radiation.Y.shape)
+        print("radiation: ", radiation.distance)
+    else: # when also storing electric field
+        if XY_are_list:
+            electric_field = rad_fact.calculate_electrical_field(
+                trajectory, source, X, Y, distance)
+            EEx = electric_field._electrical_field[:, 0]
+            EEy = electric_field._electrical_field[:, 1]
+            EEz = electric_field._electrical_field[:, 2]
+            radiation2 = Radiation(np.abs(EEx) ** 2 + np.abs(EEy) ** 2 + np.abs(EEz) ** 2, X, Y, distance)
+        else:
+            XX = np.outer(X, np.ones_like(Y))
+            YY = np.outer(np.ones_like(X), Y)
+            electric_field = rad_fact.calculate_electrical_field(
+                trajectory, source,
+                XX,
+                YY,
+                distance)
+            EEx = electric_field._electrical_field[:, :, 0]
+            EEy = electric_field._electrical_field[:, :, 1]
+            EEz = electric_field._electrical_field[:, :, 2]
+            radiation2 = Radiation(np.abs(EEx)** 2 + np.abs(EEy)**2 + np.abs(EEz)**2, XX, YY, distance)
+
+        # print("efield: ", electric_field._electrical_field.shape)
+        # print("efield: ", electric_field._X.shape)
+        # print("efield: ", electric_field._Y.shape)
+        # print("efield: ", electric_field._distance)
 
     #print('step 5')
-    return Simulation(source=source, trajectory_fact=traj_fact,
-                               radiation_fact=rad_fact, trajectory=trajectory, radiation=radiation)
-
+    return Simulation(source=source,
+                      trajectory_fact=traj_fact,
+                      radiation_fact=rad_fact,
+                      trajectory=trajectory,
+                      radiation=radiation2,
+                      electric_field=electric_field)
 
 # exemples
 
