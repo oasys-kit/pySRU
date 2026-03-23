@@ -1,0 +1,70 @@
+pySRU - TODO / Improvements
+===========================
+
+BUGS (Priority 1)
+-----------------
+[ ] Fix MagneticStructureBendingMagnet.copy() — passes length= which is not
+    a constructor parameter, causing TypeError. Should pass Bo and
+    horizontale_divergeance (self.horizontal_div).
+
+[ ] Review 35+ TODO/FIXME comments in source — many are unresolved physics
+    questions or incomplete implementations (e.g., TODO TALMAN in
+    SourceUndulatorPlane.py, missing imaginary phase in RadiationFactory.py).
+
+[ ] Remove dead code — if False: blocks in Simulation.py (lines ~631-639)
+    suggest incomplete electric field implementation.
+
+
+CODE QUALITY (Priority 2)
+--------------------------
+[ ] Replace 60+ print() statements with Python logging module for
+    configurable verbosity.
+
+[ ] Add docstrings to all modules, classes, and functions (NumPy or Google
+    style). Currently none exist anywhere in the codebase.
+
+[ ] Add type hints to function signatures throughout the package.
+
+[ ] Create custom exception classes instead of generic raise Exception(...)
+    (17+ instances). Examples:
+      - InvalidMagneticStructureError
+      - TrajectoryConversionError
+      - RadiationCalculationError
+
+[ ] Fix typos in source code:
+      - "lenght" -> "length" (multiple files)
+      - "divgeance" -> "divergence"
+      - "horizontale_divergeance" -> "horizontal_divergence"
+
+[ ] Translate French comments and variable names to English:
+      - coordonnee -> coordinate
+      - a changer -> to change
+      - etc.
+
+[ ] Remove large commented-out code blocks in Simulation.py.
+
+[ ] Fix duplicate import of scipy.constants in RadiationFactory.py.
+
+
+DESIGN (Priority 3)
+-------------------
+[ ] Create a centralized constants module — magic numbers like 0.665, 3., 2.
+    are scattered across source files with no explanation.
+
+[ ] Refactor RadiationFactory.py (28 KB, largest file) — mixed concerns,
+    split into smaller focused modules.
+
+[ ] Vectorize the spectrum frequency scan loop in Simulation.py (~line 233)
+    which currently calls print() on every iteration.
+
+[ ] Store electron_energy as an attribute in MagneticStructureBendingMagnet
+    so that copy() can fully reconstruct the original instance.
+
+
+INFRASTRUCTURE (Priority 4)
+----------------------------
+[ ] Add requirements.txt listing numpy, scipy (and optional matplotlib).
+
+[ ] Update .travis.yml — currently targets Python 3.4+, likely outdated.
+
+[ ] Replace print-based pass/fail in some test files with proper assertions.
