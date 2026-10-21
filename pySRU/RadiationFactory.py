@@ -28,6 +28,10 @@ __license__ = "MIT"
 __date__ = "31/08/2016"
 
 import numpy as np
+try:
+    from numpy import trapezoid
+except ImportError:
+    from numpy import trapz as trapezoid  # numpy < 2.0 has no numpy.trapezoid
 from pySRU.Radiation import Radiation
 import scipy.constants as codata
 import scipy.integrate as integrate
@@ -44,6 +48,20 @@ RADIATION_METHOD_APPROX_FARFIELD = 2   # calls self.energy_radiated_approximatio
 # calls self.energy_radiated_approx
 # calls self.energy_radiated_approximation_and_farfield
 eV_to_J = codata.e
+
+
+def _edge_vector(n_chap, A1, A2, A3, i):
+    """
+    Boundary term of the integration by parts at the trajectory point i (0 or -1): the three components of
+    n x (n x beta) (with A = n x beta), as in the integrand. (Before, the first component was used for the three
+    components of the field, which breaks the symmetry of E_y and E_z.) n_chap may be constant or vary along the
+    trajectory.
+    """
+    n = [np.asarray(c) for c in n_chap]
+    n = [c[i] if c.ndim > 0 else c for c in n]
+    return np.array([ n[1] * A3[i] - n[2] * A2[i],
+                     -n[0] * A3[i] + n[2] * A1[i],
+                      n[0] * A2[i] - n[1] * A1[i]])
 
 class RadiationFactory(object):
     def __init__(self, method, photon_frequency):
@@ -192,7 +210,7 @@ class RadiationFactory(object):
         integrand[2] += (A1 * (n_chap[2] - trajectory.v_z) - A2 * trajectory.a_z) * Alpha2 * Alpha1
         for k in range(3):
             # E[k] = np.trapz(integrand[k], self.trajectory.t)
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
 
         return E
 
@@ -224,7 +242,7 @@ class RadiationFactory(object):
 
         for k in range(3):
             # E[k] = np.trapz(integrand[k], self.trajectory.t)
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
         E *= self.photon_frequency * 1j
 
         terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
@@ -233,9 +251,9 @@ class RadiationFactory(object):
         Alpha_0 = (1.0 / (1.0 - n_chap[0] * trajectory.v_x[0]
                           - n_chap[1] * trajectory.v_y[0] - n_chap[2] * trajectory.v_z[0]))
 
-        terme_bord += ((n_chap[1] * A3[-1] - n_chap[2] * A2[-1]) * Alpha_1 *
+        terme_bord += (_edge_vector(n_chap, A1, A2, A3, -1) * Alpha_1 *
                        Alpha2[-1])
-        terme_bord -= ((n_chap[1] * A3[0] - n_chap[2] * A2[0]) * Alpha_0 *
+        terme_bord -= (_edge_vector(n_chap, A1, A2, A3, 0) * Alpha_0 *
                        Alpha2[0])
         E += terme_bord
 
@@ -273,7 +291,7 @@ class RadiationFactory(object):
                          + cst * (n_chap[2] - trajectory.v_z)  ) * Alpha2 * Alpha1
         for k in range(3):
                 # E[k] = np.trapz(integrand[k], self.trajectory.t)
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
 
         E *= -1j * np.exp(1j * self.photon_frequency / codata.c * (n_chap[0] * x + n_chap[1] * y + n_chap[2] * distance))
 
@@ -311,7 +329,7 @@ class RadiationFactory(object):
                          + cst * (n_chap[2] - trajectory.v_z) * Alpha1) * Alpha2
 
         for k in range(3):
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
             #E[k] = integrate.simps(integrand[k], trajectory.t)
 
         terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
@@ -320,9 +338,9 @@ class RadiationFactory(object):
         Alpha_0 = (1.0 / (1.0 - n_chap[0][0] * trajectory.v_x[0]
                           - n_chap[1][0] * trajectory.v_y[0] - n_chap[2][0] * trajectory.v_z[0]))
 
-        terme_bord += ((n_chap[1][-1] * A3[-1] - n_chap[2][-1] * A2[-1]) * Alpha_1 *
+        terme_bord += (_edge_vector(n_chap, A1, A2, A3, -1) * Alpha_1 *
                        np.exp(1j * self.photon_frequency * (trajectory.t[-1] + R[-1] / codata.c)))
-        terme_bord -= ((n_chap[1][0] * A3[0] - n_chap[2][0] * A2[0]) * Alpha_0 *
+        terme_bord -= (_edge_vector(n_chap, A1, A2, A3, 0) * Alpha_0 *
                        np.exp(1j * self.photon_frequency * (trajectory.t[0] + R[0] / codata.c)))
         E += terme_bord
 
@@ -359,7 +377,7 @@ class RadiationFactory(object):
         integrand[2] += ((A1 * (n_chap[2] - trajectory.v_z) - A2 * trajectory.a_z)
                          ) * Alpha2 * Alpha1
         for k in range(3):
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
 
             #E[k] = integrate.simps(integrand[k], trajectory.t)
 
@@ -385,7 +403,7 @@ class RadiationFactory(object):
         integrand[1] -= (- n_chap[0] * A3 + n_chap[2] * A1) * Alpha2
         integrand[2] -= (n_chap[0] * A2 - n_chap[1] * A1) * Alpha2
         for k in range(3):
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
             #E[k] = integrate.simps(integrand[k], trajectory.t)
         E *= self.photon_frequency * 1j
 
@@ -395,9 +413,9 @@ class RadiationFactory(object):
         Alpha_0 = (1.0 / (1.0 - n_chap[0][0] * trajectory.v_x[0]
                           - n_chap[1][0] * trajectory.v_y[0] - n_chap[2][0] * trajectory.v_z[0]))
 
-        terme_bord += ((n_chap[1][-1] * A3[-1] - n_chap[2][-1] * A2[-1]) * Alpha_1 *
+        terme_bord += (_edge_vector(n_chap, A1, A2, A3, -1) * Alpha_1 *
                        np.exp(1j * self.photon_frequency * (trajectory.t[-1] + R[-1] / codata.c)))
-        terme_bord -= ((n_chap[1][0] * A3[0] - n_chap[2][0] * A2[0]) * Alpha_0 *
+        terme_bord -= (_edge_vector(n_chap, A1, A2, A3, 0) * Alpha_0 *
                        np.exp(1j * self.photon_frequency * (trajectory.t[0] + R[0] / codata.c)))
         E += terme_bord
 
@@ -469,7 +487,7 @@ class RadiationFactory(object):
                          + Alpha2 * (n_chap[2] - trajectory.v_z)
                          ) * Alpha1
         for k in range(3):
-            E[k] = np.trapz(integrand[k], trajectory.t)
+            E[k] = trapezoid(integrand[k], trajectory.t)
             #E[k] = integrate.simps(integrand[k], trajectory.t)
 
         terme_bord = np.full((3), 0. + 1j * 0., dtype=complex)
@@ -478,9 +496,9 @@ class RadiationFactory(object):
         Alpha_0 = (1.0 / (1.0 - n_chap[0][0] * trajectory.v_x[0]
                           - n_chap[1][0] * trajectory.v_y[0] - n_chap[2][0] * trajectory.v_z[0]))
 
-        terme_bord += ((n_chap[1][-1] * A3[-1] - n_chap[2][-1] * A2[-1]) * Alpha_1*
+        terme_bord += (_edge_vector(n_chap, A1, A2, A3, -1) * Alpha_1*
                        np.exp(1j * self.photon_frequency * (trajectory.t[-1] +R[-1]/codata.c) ))
-        terme_bord -= ((n_chap[1][0] * A3[0] - n_chap[2][0] * A2[0]) * Alpha_0*
+        terme_bord -= (_edge_vector(n_chap, A1, A2, A3, 0) * Alpha_0*
                        np.exp(1j * self.photon_frequency * (trajectory.t[0] + R[0]/codata.c)))
         # E += terme_bord
         return E

@@ -82,7 +82,9 @@ class UndulatorSimulationTest(unittest.TestCase):
 
         sim_test.change_Nb_pts_radiation(100)
         self.assertEqual(sim_test.radiation_fact.Nb_pts,100)
-        self.assertFalse(np.all(ref.radiation.X == sim_test.radiation.X))
+        # the grid changed (it may have a different shape: compare shapes before values)
+        self.assertFalse(ref.radiation.X.shape == sim_test.radiation.X.shape and
+                         np.all(ref.radiation.X == sim_test.radiation.X))
         self.assertTrue(ref.radiation.X.min() == sim_test.radiation.X.min())
         self.assertTrue(ref.radiation.X.max() == sim_test.radiation.X.max())
         self.assertTrue(ref.radiation.Y.min() == sim_test.radiation.Y.min())

@@ -28,6 +28,10 @@ __license__ = "MIT"
 __date__ = "31/08/2016"
 
 import numpy as np
+try:
+    from numpy import trapezoid
+except ImportError:
+    from numpy import trapz as trapezoid  # numpy < 2.0 has no numpy.trapezoid
 import scipy.integrate as integrate
 from abc import abstractmethod
 
@@ -102,8 +106,8 @@ class Radiation(object):
             X = np.linspace(self.X.min(), self.X.max(), self.X.shape[0])
             Y = np.linspace(self.Y.min(), self.Y.max(), self.Y.shape[1])
 
-            res1=integrate.trapz(self.intensity, X)
-            res = integrate.trapz(res1, Y)
+            res1=trapezoid(self.intensity, X)
+            res = trapezoid(res1, Y)
 
             # res = integrate.simps(integrate.simps(self.intensity, X), Y)
 
@@ -115,7 +119,7 @@ class Radiation(object):
                 XY = np.zeros_like(self.X)
                 for i in range(1, len(self.X)):
                     XY[i] = XY[i-1]+np.sqrt((self.X[i] - self.X[i-1]) * 2 + (self.Y[i] - self.Y[i-1]) ** 2)
-                res = np.trapz(self.intensity, XY)
+                res = trapezoid(self.intensity, XY)
 
         # Note that the value of flux is in phot/s/0.1%bw/mrad2 (or .../mm2) and
         # our grid is in rad (or m), therefore we must account for this:

@@ -5,6 +5,7 @@ from pySRU.tests.MagneticStructureTest  import MagneticStructureTest
 from pySRU.tests.MainTest               import MainTest
 from pySRU.tests.RadiationFactorytest   import RadiationFactoryTest
 from pySRU.tests.RadiationTest          import RadiationTest
+from pySRU.tests.RadiationPolarizationTest import RadiationPolarizationTest
 from pySRU.tests.SimulationTest         import UndulatorSimulationTest
 from pySRU.tests.SourceTest             import UndulatorParameterTest
 from pySRU.tests.TrajectoryFactoryTest  import TrajectoryFactoryTest
@@ -20,6 +21,7 @@ def suite():
         unittest.makeSuite(MainTest, 'test'),
         unittest.makeSuite(RadiationFactoryTest, 'test'),
         unittest.makeSuite(RadiationTest, 'test'),
+        unittest.makeSuite(RadiationPolarizationTest, 'test'),
         unittest.makeSuite(UndulatorSimulationTest, 'test'),
         unittest.makeSuite(UndulatorParameterTest, 'test'),
         unittest.makeSuite(TrajectoryFactoryTest, 'test'),
