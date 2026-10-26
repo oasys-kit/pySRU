@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pySRU"
+version = "0.5.5"
+description = "Python synchrotron undulator calcution"
+readme = "README.rst"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Sophie Thery" },
+    { name = "Mark Glass" },
+    { name = "Manuel Sanchez del Rio", email = "srio@esrf.eu" },
+]
+dependencies = [
+    "numpy",
+    "scipy",
+]
+
+[project.urls]
+Homepage = "https://github.com/oasys-kit/pySRU/"
+
+[tool.setuptools.packages.find]
+include = ["pySRU", "pySRU.*"]
