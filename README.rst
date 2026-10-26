@@ -66,8 +66,9 @@ This piece of Python code shows how the library can be used via its python bindi
     simulation_test.radiation.plot(title="Flux in far field vs angle")
     
 
-.. image:: https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/radiation_xraybooklet.jpeg
-Result link: https://github.com/SophieTh/und_Sophie_2016/blob/master/doc/radiation_xraybooklet.jpeg
+.. image:: https://raw.githubusercontent.com/oasys-kit/pySRU/master/doc/radiation_xraybooklet.jpeg
+
+Result link: https://github.com/oasys-kit/pySRU/blob/master/doc/radiation_xraybooklet.jpeg
 
 Documentation
 -------------
@@ -82,7 +83,9 @@ https://github.com/oasys-kit/pySRU/blob/master/doc/report_thery_m1.pdf
 Testing
 -------
 
-- Travis CI status: |Travis Status|
+Run the test suite with::
+
+    ./pySRU/tests/run_tests.sh
 
 To do
 =====
@@ -92,6 +95,3 @@ To do
 - Implement the pi polarization
 - Extend to helical undulators
 
-
-.. |Travis Status| image:: https://travis-ci.org/srio/und_Sophie_2016.svg?branch=master
-   :target: https://travis-ci.org/srio/und_Sophie_2016
